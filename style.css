@@ -1,0 +1,28 @@
+#yama{
+    background-color: darkolivegreen;
+}
+
+#kawa{
+    background-color: darkslategray;
+    min-height: 1.5em;
+}
+
+#te{
+    background-color: black;
+}
+
+.hai{
+    color: white;
+    display: inline-block;
+    border: 1px solid gray;
+    text-decoration: none;
+    width:1.2em;
+    margin: 0.1em;
+    overflow: hidden;
+    text-align: center;
+}
+
+.hai:hover{
+    background-color: white;
+    color: black;
+}
