@@ -49,31 +49,31 @@ let kawaHaiViewTemplete;
 function getHaiDisplay(kindOfHaiId) {
     switch (kindOfHaiId) {
         case manzuIds[0]:
-            return "１";
+            return "一";
             break;
         case manzuIds[1]:
-            return "２";
+            return "二";
             break;
         case manzuIds[2]:
-            return "３";
+            return "三";
             break;
         case manzuIds[3]:
-            return "４";
+            return "四";
             break;
         case manzuIds[4]:
-            return "５";
+            return "五";
             break;
         case manzuIds[5]:
-            return "６";
+            return "六";
             break;
         case manzuIds[6]:
-            return "７";
+            return "七";
             break;
         case manzuIds[7]:
-            return "８";
+            return "八";
             break;
         case manzuIds[8]:
-            return "９";
+            return "九";
             break;
         case pinzuIds[0]:
             return "①";
@@ -103,31 +103,31 @@ function getHaiDisplay(kindOfHaiId) {
             return "⑨";
             break;
         case souzuIds[0]:
-            return "Ⅰ";
+            return "１";
             break;
         case souzuIds[1]:
-            return "Ⅱ";
+            return "２";
             break;
         case souzuIds[2]:
-            return "Ⅲ";
+            return "３";
             break;
         case souzuIds[3]:
-            return "Ⅳ";
+            return "４";
             break;
         case souzuIds[4]:
-            return "Ⅴ";
+            return "５";
             break;
         case souzuIds[5]:
-            return "Ⅵ";
+            return "６";
             break;
         case souzuIds[6]:
-            return "Ⅶ";
+            return "７";
             break;
         case souzuIds[7]:
-            return "Ⅷ";
+            return "８";
             break;
         case souzuIds[8]:
-            return "Ⅸ";
+            return "９";
             break;
         case hakuId:
             return "白";
@@ -174,7 +174,12 @@ function updateViewOfHai(hais, place, viewTemplete) {
     hais.forEach(
         function (hai) {
             place.innerHTML += viewTemplete
-                .replace('{display}', getHaiDisplay(hai.kindOfHaiId))
+                .replace(
+                    '{display}',
+                    place == yama
+                    ? "■"
+                    : getHaiDisplay(hai.kindOfHaiId)
+                )
                 .replace('{haiId}', hai.id);
         }
     )
@@ -188,8 +193,6 @@ function sortTeHai(teHai) {
       }
     );
 }
-
-
 
 // 初期表示時
 window.addEventListener('DOMContentLoaded', function () {
@@ -248,14 +251,16 @@ window.addEventListener('DOMContentLoaded', function () {
         }
 
         sortTeHai(teHai);
+
+        // 手牌と山ハイと河ハイの表示更新
+        {
+            updateViewOfHai(teHai, te, teHaiViewTemplete);
+            updateViewOfHai(yamaHai, yama, yamaHaiViewTemplete);
+            updateViewOfHai(kawaHai, kawa, kawaHaiViewTemplete);
+        }
     }
 
-    // 手牌と山ハイと河ハイの表示更新
-    {
-        updateViewOfHai(teHai, te, teHaiViewTemplete);
-        updateViewOfHai(yamaHai, yama, yamaHaiViewTemplete);
-        updateViewOfHai(kawaHai, kawa, kawaHaiViewTemplete);
-    }
+    //todo 上がり判定
 
 
 });
@@ -281,9 +286,28 @@ function teOnClick(selected){
         }
     );
 
+    // 手牌のソート
+    sortTeHai(teHai);
+
     // 手牌と河の表示更新
     {
         updateViewOfHai(teHai, te, teHaiViewTemplete);
         updateViewOfHai(kawaHai, kawa, kawaHaiViewTemplete);
     }
+
+    //山から1ハイ取る
+    {
+        teHai.push(yamaHai.shift());
+
+        // 手牌と山ハイと河ハイの表示更新
+        {
+            updateViewOfHai(teHai, te, teHaiViewTemplete);
+            updateViewOfHai(yamaHai, yama, yamaHaiViewTemplete);
+            updateViewOfHai(kawaHai, kawa, kawaHaiViewTemplete);
+        }
+    }
+
+
+    //todo 上がり判定
+
 }

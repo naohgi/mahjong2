@@ -4,13 +4,13 @@
 }
 
 #kawa{
-    background-color: darkslategray;
+    background-color: darkolivegreen;
     min-height: 2.2em;
     padding:0.5em 0em;
 }
 
 #te{
-    background-color: black;
+    background-color: darkslategrey;
     padding:0.5em 0em;
 
 
@@ -30,7 +30,7 @@
     text-align: center;
 }
 
-.hai:hover{
+#te .hai:hover{
     background-color: white;
     color: black;
 }
