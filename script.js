@@ -24,10 +24,6 @@ const jihaiIds = sangenIds.concat(kazesIds);
 //すべてのハイ種
 const allKindOfHaiIds = suhaiIds.concat(jihaiIds);
 
-//ハイの表示テンプレート
-let yamaHaiViewTemplete;
-let teHaiViewTemplete;
-let kawaHaiViewTemplete;
 
 //// 変数
 
@@ -42,6 +38,11 @@ let teHai = [];
 
 // 河ハイ
 let kawaHai = [];
+
+//ハイの表示テンプレート
+let yamaHaiViewTemplete;
+let teHaiViewTemplete;
+let kawaHaiViewTemplete;
 
 //// 関数
 // ハイの表示取得
@@ -179,6 +180,15 @@ function updateViewOfHai(hais, place, viewTemplete) {
     )
 }
 
+// 手ハイのソート
+function sortTeHai(teHai) {
+    teHai.sort(
+      function(a,b){
+          return a.kindOfHaiId - b.kindOfHaiId;
+      }
+    );
+}
+
 
 
 // 初期表示時
@@ -229,13 +239,15 @@ window.addEventListener('DOMContentLoaded', function () {
         yamaHai = allHais.slice();
     }
 
-    // 手牌を取る
+    // 手牌を14枚取る
     {
         teHai = [];
         const numberOfTehai = 14;
         for (i = 0; i < numberOfTehai; i++) {
             teHai.push(yamaHai.shift());
         }
+
+        sortTeHai(teHai);
     }
 
     // 手牌と山ハイと河ハイの表示更新
@@ -256,9 +268,6 @@ function teOnClick(selected){
 
     // 手牌を削除
     teHai.some(function (hai, index) {
-
-            //TODO debug
-            console.log("(Number(hai.id) === Number(selectedHaiId)) " + (Number(hai.id) === Number(selectedHaiId)));
 
             if ( (Number(hai.id) === Number(selectedHaiId)) ) {
 
